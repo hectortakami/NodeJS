@@ -1,0 +1,22 @@
+p {
+  font-family: Contrail One;
+  margin-right: 1.6%;
+  font-size: 80px;
+  text-transform: uppercase;
+  text-align: right;
+  margin-bottom: 0;
+}
+
+.description {
+  font-family: Contrail One;
+  margin-right: 1.6%;
+  font-size: 20px;
+  text-align: right;
+  margin-bottom: 3%;
+}
+
+img {
+  width: 30%;
+  float: left; /*Removes the margin betwwen images */
+  margin: 1.66%;
+}

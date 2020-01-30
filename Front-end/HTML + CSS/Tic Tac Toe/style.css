@@ -1,0 +1,24 @@
+h1 {
+  font-family: Pacifico;
+  text-align: center;
+  margin: 100px auto 50px auto;
+}
+
+table {
+  margin: auto;
+}
+
+td {
+  width: 100px;
+  height: 100px;
+}
+
+.vertical {
+  border-right: 1px black solid;
+  border-left: 1px black solid;
+}
+
+.horizontal {
+  border-top: 1px black solid;
+  border-bottom: 1px black solid;
+}
