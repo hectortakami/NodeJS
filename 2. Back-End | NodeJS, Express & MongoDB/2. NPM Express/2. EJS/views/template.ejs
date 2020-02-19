@@ -1,0 +1,21 @@
+<%- include("layouts/header") %>
+<%- include("layouts/navbar") %>
+
+<div class="container">
+
+    <div class="card my-3">
+        <img src="http://t1.gstatic.com/images?q=tbn:ANd9GcTiAlXB010hnRrYSMwTOV7YD82Mx33feT2zUROO0Mzj5WhNEklAzzr-fUhUCfO8Zfq_uBVwZJQiYrupvJI3wik"
+            class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Hello <%= user.charAt(0).toUpperCase() + user.slice(1) %></h5>
+            <% if(user.toLowerCase() === "hector"){ %>
+            <p class="card-text"> You are awesome! </p>
+            <% } else { %>
+            <p class="card-text"> Nice to meet you! </p>
+            <% } %>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+    </div>
+</div>
+
+<%- include("layouts/footer") %>
