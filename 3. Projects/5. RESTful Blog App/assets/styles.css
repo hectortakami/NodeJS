@@ -1,0 +1,47 @@
+#navIcon {
+font-size: 3em;
+margin-right: 50px;
+}
+
+#cardImage{
+    height: 200px;
+} 
+
+#postImage{
+    height: 400px;
+} 
+
+#titleDelete{
+    font-size: 30px;
+    text-align: center;
+    color: cornflowerblue;
+}
+
+#deleteDescription{
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 5px;
+    font-size: 15px;
+}
+
+p{
+    font-size: 20px;
+    text-align: justify;
+}
+
+.blogContent{
+    margin-top: 30px;
+}
+
+.editContainer{
+    text-align: right;
+}
+
+.postTitle{
+    font-size: 3rem;
+}
+
+#deleteSegment{
+    margin: 100px auto;
+    width: 450px;
+}

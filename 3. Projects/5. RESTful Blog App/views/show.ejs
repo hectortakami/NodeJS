@@ -1,0 +1,33 @@
+<%- include ("layout/header") %>
+<div class="ui container segment">
+    <img id="postImage" class="ui fluid image" src="<%= blog.image %>">
+    <div class="ui container segment editContainer">
+        <div class="ui buttons">
+            <a href="/blogs/<%= blog._id %>/edit" class="ui labeled icon button">
+                <i class="edit icon"></i>
+                Edit Post
+            </a>
+            <a href="/blogs/<%= blog._id %>/destroy" class="ui right labeled icon button red">
+                <i class="trash alternate icon"></i>
+                Delete
+            </a>
+        </div>
+    </div>
+    <div class="ui items">
+        <div class="item">
+            <div class="content">
+                <h1 class="postTitle"><em>"<%= blog.title %>"</em></h1>
+                <div class="meta">
+                    <span><%- blog.created.toDateString() %></span>
+                </div>
+                <div class="blogContent content">
+                    <p><%- blog.body %> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="/blogs" class="ui primary basic button fluid">
+        Go Back
+    </a>
+</div>
+<%- include ("layout/footer") %>
