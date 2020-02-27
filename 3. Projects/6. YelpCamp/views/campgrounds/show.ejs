@@ -13,15 +13,30 @@
             <div class="card">
                 <img src="<%= camp.image %>" class="card-img-top">
                 <div class="card-body">
-                    <h4 class="card-subtitle mb-2 text-muted text-right">$9.00/Night</h4>
+                    <h4 class="card-subtitle mb-2 text-muted text-right">$<%= camp.price %>/Night</h4>
                     <h1 class="card-title"><%= camp.name %></h1>
                     <p><small class="text-muted">Submitted by <%= camp.createdBy.username %></small></p>
                     <p class="card-text"><%= camp.description %></p>
+
+                    <% if (currentUser != undefined && camp.createdBy.username == currentUser.username) { %>
+                    <div class="d-inline" style="color: white;">
+                        <a class="btn btn-info" href="/campgrounds/<%= camp._id %>/edit">Edit
+                            Campground</a>
+                        <form class="d-inline" action="/campgrounds/<%= camp._id %>/delete" , method="POST">
+                            <button class="btn  btn-danger" type="submit">Delete</button>
+                        </form>
+                    </div>
+                    <% }; %>
+
                 </div>
+
             </div>
             <div class="card bg-light my-3">
-                <div class="card-header text-right">
-                    <a class="btn btn-success" href="/campgrounds/<%= camp._id %>/comments/new">Add Comment</a>
+                <div class="card-header">
+                    <div class="text-right">
+                        <a class="btn btn-success " href="/campgrounds/<%= camp._id %>/comments/new">Add
+                            Comment</a>
+                    </div>
                 </div>
                 <div class="card-body">
                     <% camp.comments.forEach((comment, i) => { %>
@@ -29,13 +44,26 @@
                         <div class="row no-gutters">
                             <div class="col-md-2 text-center">
                                 <img src="<%= comment.author.image %>"
-                                    class="d-none d-md-block border border-light rounded-circle comment-card-image img-fluid  mt-4 ml-3"
+                                    class="d-none d-md-block border border-light rounded-circle comment-card-image img-fluid  mt-2 ml-4"
                                     alt="...">
+
+                                <% if (currentUser != undefined && comment.author.username == currentUser.username) { %>
+                                <form action="/campgrounds/<%= camp._id %>/comments/<%= comment._id %>/delete"
+                                    method="POST">
+                                    <div class="mx-2 mt-1">
+                                        <button type="submit" class="btn btn-sm btn-danger btn-block">Delete</button>
+                                    </div>
+                                    <div class="mx-2 mt-1">
+                                        <a href="/campgrounds/<%= camp._id %>/comments/<%= comment._id  %>/edit"
+                                            class="btn btn-sm btn-secondary btn-block">Edit</a>
+                                    </div>
+                                </form>
+                                <% }; %>
+
                             </div>
                             <div class="col-md-10">
-                                <div class="card-body ml-2">
-                                    <p class="card-text text-right"><small class="text-muted">Last updated 3 mins
-                                            ago</small></p>
+                                <div class="card-body pl-0">
+
                                     <h5 class="card-title"><%= comment.author.username %></h5>
                                     <p class="card-text">
                                         <% if (comment.text.length < 150) { %>
@@ -45,6 +73,8 @@
                                         <a href="#" class="text-primary stretched-link"> Read More</a>
                                         <% }; %>
                                     </p>
+                                    <p class="card-text text-right"><small class="text-muted">Last updated 3 mins
+                                            ago</small></p>
                                 </div>
                             </div>
                         </div>

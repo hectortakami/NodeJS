@@ -6,7 +6,8 @@ var express = require("express"),
     mongoDB = 'mongodb://localhost/yelp_camp',
     expressSession = require("express-session"),
     passport = require("passport"),
-    LocalStrategy = require("passport-local");
+    LocalStrategy = require("passport-local"),
+    flash = require('connect-flash');
 
 // ROUTES IMPORT
 var indexRoutes = require("./routes/index"),
@@ -31,6 +32,11 @@ app.use(expressSession({
     saveUninitialized: false
 }));
 
+// Use the flash library to get messages
+app.use(flash());
+
+// Passport configuration
+// for user authentification
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -41,6 +47,9 @@ app.use(passport.session());
 // same data to work with! In this case is the current user information
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.warning = req.flash("warning");
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 });
 

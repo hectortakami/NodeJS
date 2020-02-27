@@ -1,20 +1,20 @@
 var express = require("express");
 var router = express.Router();
 var Camp = require("../models/campground"),
-    Comment = require("../models/comment"),
-    User = require("../models/user");
+    Comment = require("../models/comment");
+var middleware = require("../middleware");
 
 
 
 // COMMENTS ROUTES
 
-router.get("/campgrounds/:id/comments/new", checkAuthentication, (req, res) => {
+router.get("/campgrounds/:id/comments/new", middleware.checkAuthentication, (req, res) => {
     Camp.findById(req.params.id, (err, foundCamp) => {
         res.render("comments/new", { camp: foundCamp });
     });
 });
 
-router.post("/campgrounds/:id/comments", checkAuthentication, (req, res) => {
+router.post("/campgrounds/:id/comments", middleware.checkAuthentication, (req, res) => {
     Comment.create(req.body.comment, (err, comment) => {
         if (err) {
             console.log("SOMETHING WENT WRONG :(");
@@ -36,14 +36,54 @@ router.post("/campgrounds/:id/comments", checkAuthentication, (req, res) => {
     })
 });
 
-// AUTHENTICATION MIDDLEWARE
-function checkAuthentication(req, res, next) {
-    //req.isAuthenticated() will return true if user is logged in
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    console.log("User without identification.");
-    res.redirect("/login");
-}
+router.get("/campgrounds/:id/comments/:commentId/edit", middleware.checkCommentOwnership, (req, res) => {
+    Camp.findById(req.params.id).populate("comments").exec((err, foundCamp) => {
+        foundCamp.comments.forEach(comment => {
+            if (comment._id.equals(req.params.commentId)) {
+                res.render("comments/edit", { camp: foundCamp, comment: comment });
+            }
+        });
+    });
+});
+
+router.post("/campgrounds/:id/comments/:commentId", middleware.checkCommentOwnership, (req, res) => {
+    Camp.findById(req.params.id).populate("comments").exec((err, foundCamp) => {
+        if (err) {
+            res.send("Cant edit the post :(");
+        } else {
+            foundCamp.comments.forEach(comment => {
+                if (comment._id.equals(req.params.commentId)) {
+                    comment.text = req.body.comment.text;
+                    comment.save();
+                    foundCamp.save();
+                    res.redirect(`/campgrounds/${req.params.id}`);
+                }
+            });
+        }
+    });
+});
+
+router.post("/campgrounds/:id/comments/:commentId/delete", middleware.checkCommentOwnership, (req, res) => {
+    Camp.findById(req.params.id).populate("comments").exec((err, foundCamp) => {
+        if (err) {
+            res.send("Couldn't delete the post :(");
+        } else {
+            foundCamp.comments.forEach((comment, i) => {
+                if (comment._id.equals(req.params.commentId)) {
+                    foundCamp.comments.splice(i, 1);
+                    Comment.findByIdAndDelete(comment._id, (err, deletedComment) => {
+                        if (err) {
+                            res.send("Couldn't delete the post :(");
+                        } else {
+                            foundCamp.save();
+                            res.redirect(`/campgrounds/${req.params.id}`);
+                        }
+                    });
+                }
+            });
+        }
+    });
+});
+
 
 module.exports = router;

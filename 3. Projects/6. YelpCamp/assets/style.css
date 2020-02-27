@@ -8,9 +8,10 @@
 }
 
 .comment-card-image{
-   position: relative;
+    position: relative;
     display: inline;
-    width: 100%;
+    width: 75px;
+    height: 75px;
 
 }
 

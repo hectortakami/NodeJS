@@ -50,3 +50,25 @@
                 </ul>
             </div>
         </nav>
+
+        <% if (warning && warning.length > 0) { %>
+        <div class="container mb-5">
+            <div class="alert alert-warning" role="alert">
+                <%= warning %>
+            </div>
+        </div>
+        <% } %>
+        <% if (error && error.length > 0) { %>
+        <div class="container mb-5">
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+        </div>
+        <% } %>
+        <% if (success && success.length > 0) { %>
+        <div class="container mb-5">
+            <div class="alert alert-primary" role="alert">
+                <%= success %>
+            </div>
+        </div>
+        <% } %>

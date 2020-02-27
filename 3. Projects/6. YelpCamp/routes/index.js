@@ -24,10 +24,11 @@ router.post("/register", (req, res) => {
         req.body.password,
         function (err, hashedUser) {
             if (err) {
-                console.log(err);
+                req.flash("error", "Couldn't register user");
                 return res.render("auth/register");
             }
             passport.authenticate("local")(req, res, function () {
+                req.flash("success", "Welcome to Yelp Camp! " + hashedUser.username);
                 res.redirect("/campgrounds");
             });
         });
@@ -41,24 +42,19 @@ router.post("/login",
     passport.authenticate("local", { failureRedirect: "/register" }),
     (req, res) => {
         User.findOne({ username: req.body.username }, (err, user) => {
-            err ? console.log("Something went wrong! :(") :
+            if (err) {
+                req.flash("error", "Couldn't retrieve user. Error: " + err);
+            } else {
+                req.flash("success", "Welcome back! " + user.username);
                 res.redirect("/campgrounds");
+            }
         });
     });
 
 router.get("/logout", (req, res) => {
     req.logOut();
+    req.flash("success", "Successfully log you out! See you soon :)")
     res.redirect("/");
 });
-
-// AUTHENTICATION MIDDLEWARE
-function checkAuthentication(req, res, next) {
-    //req.isAuthenticated() will return true if user is logged in
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    console.log("User without identification.");
-    res.redirect("/login");
-}
 
 module.exports = router;
