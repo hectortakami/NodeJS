@@ -1,0 +1,25 @@
+<%- include ("layout/header") %>
+<div class="ui container segment" id="deleteSegment">
+    <h1 class="ui header huge aligned center">Are you sure to delete this post?</h1>
+    <div class="ui one column grid">
+        <div class="column">
+            <div class="ui fluid card">
+                <div class="content">
+                    <h1 class="header" id="titleDelete"><em>"<%= blog.title %>"</em></h1>
+                </div>
+                <h4 id="deleteDescription" class="ui meta">
+                    Do you really want to delete these records? This process cannot be undone.
+                </h4>
+            </div>
+            <form action="/blogs/<%= blog._id %>/destroy" method="POST">
+                <div class="extra content">
+                    <div class="ui two buttons">
+                        <a href="/blogs/<%= blog._id %>" class="ui basic blue button">Go Back</a>
+                        <button type="submit" class="ui basic red button">Yes! Delete this post!</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include ("layout/footer") %>

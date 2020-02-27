@@ -1,0 +1,24 @@
+<%- include ("layout/header") %>
+
+<div class="ui main text container segment">
+    <div class="ui huge header">Edit Blog</div>
+    <form class="ui form" action="/blogs/<%= blog._id %>" method="POST">
+        <div class="field">
+            <label>Post Title</label>
+            <input required type="text" name="blog[title]" placeholder="Post title..." value="<%= blog.title %>">
+        </div>
+        <div class="field">
+            <label>Image URL</label>
+            <input required type="text" name="blog[image]" placeholder="Image URL..." value="<%= blog.image %>">
+        </div>
+        <div class="field">
+            <label>Post Content</label>
+            <textarea required name="blog[body]"
+                placeholder="Write some awesome ideas here..."><%= blog.body %></textarea>
+        </div>
+
+        <button class="ui fluid primary button" type="submit">Submit</button>
+    </form>
+</div>
+
+<%- include ("layout/footer") %>

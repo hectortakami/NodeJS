@@ -1,0 +1,36 @@
+<%- include ("layout/header") %>
+<div class="ui container center aligned">
+    <div class="ui huge header"> All Blogs </div>
+    <div class="ui three column grid">
+        <% blogs.forEach(blog => { %>
+        <div class="column">
+            <div class="ui fluid card">
+                <a class="image" href="#">
+                    <img id="cardImage" src="<%= blog.image %>">
+                </a>
+                <div class="ui content ">
+                    <div class="ui meta right aligned">
+                        <a><%= blog.created.toDateString() %></a>
+                    </div>
+                    <a class="ui left aligned header" href="/blogs/<%= blog._id %>">
+                        <% if (blog.title.length > 30) { %>
+                        <%= blog.title.substring(0, 25)%>...
+                        <% } else { %>
+                        <%= blog.title %>
+                        <% }%>
+                    </a>
+
+                    <p class="ui left aligned meta">
+                        <%= blog.body.substring(0,200).replace(/<\/?[^>]+(>|$)/g, "").toLowerCase() %>...
+                    </p>
+                </div>
+                <div class="extra content center aligned">
+                    <a href="/blogs/<%= blog._id %>" class="ui primary basic button fluid">Read More</a>
+                </div>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+</div>
+
+<%- include ("layout/footer") %>
